@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestService", "RestService\RestService.csproj", "{B900A2FB-B35D-4E0D-86A0-DE58292C5B03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfHostedRestService", "SelfHostedRestService\SelfHostedRestService.csproj", "{9F25FF64-90E7-4749-9252-4BBD23A18847}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B900A2FB-B35D-4E0D-86A0-DE58292C5B03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B900A2FB-B35D-4E0D-86A0-DE58292C5B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B900A2FB-B35D-4E0D-86A0-DE58292C5B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B900A2FB-B35D-4E0D-86A0-DE58292C5B03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F25FF64-90E7-4749-9252-4BBD23A18847}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F25FF64-90E7-4749-9252-4BBD23A18847}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F25FF64-90E7-4749-9252-4BBD23A18847}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F25FF64-90E7-4749-9252-4BBD23A18847}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

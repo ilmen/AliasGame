@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace RestService.Models
+namespace SelfHostedRestService.Models
 {
     public class Words
     {
         public string[] GetAllWords()
         {
-            var path = System.Configuration.ConfigurationManager.AppSettings["WordsFilePath"];
-            var wordsRowText = System.IO.File.ReadAllText(path, System.Text.Encoding.UTF8);
+            var path = (new WordsFilePathProvider()).GetPath();
+            var wordsRowText = System.IO.File.ReadAllText(path);
 
             return wordsRowText
                 .Split(new char[] { ';' })
