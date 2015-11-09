@@ -9,6 +9,8 @@ namespace SelfHostedRestService.Models
     {
         public string[] GetAllWords()
         {
+            //return new string[] { "abc", "def" };
+
             var path = (new WordsFilePathProvider()).GetPath();
             var wordsRowText = System.IO.File.ReadAllText(path);
 

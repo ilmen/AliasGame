@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SelfHostedRestService.Models;
+using System.Collections.Generic;
 using System.Web.Http;
 
 namespace SelfHostedRestService.Controllers
@@ -9,7 +10,7 @@ namespace SelfHostedRestService.Controllers
 
         static WordsController()
         {
-            var wordsProvider = new SelfHostedRestService.Models.Words();
+            var wordsProvider = new Words();
             words = wordsProvider.GetAllWords();
         }
 
