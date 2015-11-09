@@ -39,16 +39,7 @@ namespace SelfHostedRestService.Models
         {
             var rnd = new Random(GetRandomSide());
 
-            var rndWords = words
-                .Select(x => new
-                {
-                    Word = x,
-                    Rang = rnd.Next(words.Length)
-                })
-                .OrderBy(x => x.Rang)
-                .ToArray();
-
-            return rndWords.Select(x => x.Word).ToArray();
+            return words.OrderBy(x => rnd.Next()).ToArray();
         }
 
         private int GetRandomSide()

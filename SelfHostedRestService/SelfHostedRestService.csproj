@@ -66,9 +66,9 @@
     <Compile Include="Controllers\WordsController.cs" />
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\Cards.cs" />
-    <Compile Include="Models\HttpSelfHostConfigurationProvider.cs" />
+    <Compile Include="Infrastructure\HttpSelfHostConfigurationProvider.cs" />
     <Compile Include="Models\Words.cs" />
-    <Compile Include="Models\WordsFilePathProvider.cs" />
+    <Compile Include="Infrastructure\WordsFilePathProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

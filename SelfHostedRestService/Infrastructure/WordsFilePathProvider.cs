@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SelfHostedRestService.Models
+﻿namespace SelfHostedRestService.Infrastructure
 {
     public class WordsFilePathProvider
     {

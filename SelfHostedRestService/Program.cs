@@ -1,8 +1,7 @@
-﻿using System;
-using System.Web.Http;
-using System.Web.Http.SelfHost;
+﻿using SelfHostedRestService.Infrastructure;
+using System;
 using System.Linq;
-using SelfHostedRestService.Models;
+using System.Web.Http.SelfHost;
 
 namespace SelfHostedRestService
 {

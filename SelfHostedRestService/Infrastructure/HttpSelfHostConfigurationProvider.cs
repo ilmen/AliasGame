@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using System.Web.Http.SelfHost;
 
-namespace SelfHostedRestService.Models
+namespace SelfHostedRestService.Infrastructure
 {
     public class HttpSelfHostConfigurationProvider
     {

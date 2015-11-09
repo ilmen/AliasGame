@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SelfHostedRestService.Infrastructure;
+using System;
 using System.Linq;
-using System.Web;
 
 namespace SelfHostedRestService.Models
 {
