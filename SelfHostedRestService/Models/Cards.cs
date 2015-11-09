@@ -16,9 +16,9 @@ namespace SelfHostedRestService.Models
                 .Select((word, index) => new
                 {
                     Word = word,
-                    CardNumber = (int)(index / Card.Size) + 1
+                    CardIndex = (int)(index / Card.Size)
                 })
-                .GroupBy(x => x.CardNumber)
+                .GroupBy(x => x.CardIndex)
                 .ToArray();
 
             return wordGroups

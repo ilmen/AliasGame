@@ -20,16 +20,16 @@ namespace SelfHostedRestService.Models
         #endregion
 
         #region Number readonly property
-        private readonly int number;
+        private readonly int index;
 
-        public int Number { get { return number; } } 
+        public int Index { get { return index; } } 
         #endregion
         
         public Card(int number, string[] wordsArray)
         {
             if (wordsArray.Length != size) throw new ArgumentOutOfRangeException("Карточки должны состоять из " + size + " слов");
 
-            this.number = number;
+            this.index = number;
             this.words = wordsArray;
         }
     }
