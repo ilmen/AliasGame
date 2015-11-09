@@ -18,7 +18,8 @@ namespace SelfHostedRestService.Models
 
             // оставляем только JSON сериализатор
             selfHostConfiguraiton.Formatters.Clear();
-            selfHostConfiguraiton.Formatters.Add(new System.Net.Http.Formatting.JsonMediaTypeFormatter());
+            var jsonFormater = new System.Net.Http.Formatting.JsonMediaTypeFormatter();
+            selfHostConfiguraiton.Formatters.Add(jsonFormater);
 
             // настраиваем роуты
             selfHostConfiguraiton.Routes.MapHttpRoute(
