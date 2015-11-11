@@ -1,4 +1,5 @@
-﻿using SelfHostedRestService.Models;
+﻿using SelfHostedRestService.Infrastructure;
+using SelfHostedRestService.Models;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -13,7 +14,7 @@ namespace SelfHostedRestService.Controllers
             var wordProvider = new Words();
             var words = wordProvider.GetAllWords();
 
-            var cardProvider = new Cards(10);
+            var cardProvider = new Cards(10, new StringShuffler());
             cards = cardProvider.GetCards(words);
         }
 

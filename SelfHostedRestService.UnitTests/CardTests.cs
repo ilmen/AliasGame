@@ -33,7 +33,18 @@ namespace SelfHostedRestService.UnitTests
 
             var card = new Card(0, words);
 
-            CollectionAssert.AreEqual(card.Words, words);
+            CollectionAssert.AreEqual(words, card.Words);
+        }
+
+        [Test]
+        public void Ctor_Always_SetCorrectProperties()
+        {
+            var index = 7;
+            var words = new string[] { "word1", "word2", "word3" };
+            var card = new Card(index, words);
+
+            Assert.AreEqual(index, card.Index);
+            CollectionAssert.AreEquivalent(words, card.Words);
         }
     }
 }

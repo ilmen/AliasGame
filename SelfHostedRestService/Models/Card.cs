@@ -19,11 +19,11 @@ namespace SelfHostedRestService.Models
         public int Index { get { return index; } } 
         #endregion
         
-        public Card(int number, string[] wordsArray)
+        public Card(int index, string[] wordsArray)
         {
             if (wordsArray.Length == 0) throw new ArgumentOutOfRangeException("Коллекция слов для карточки не может быть пустой!");
 
-            this.index = number;
+            this.index = index;
             this.words = wordsArray;
         }
     }

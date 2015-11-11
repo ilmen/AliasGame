@@ -8,15 +8,15 @@ namespace SelfHostedRestService.Models
 {
     public class Cards
     {
-        public IShuffler<string> Shuffler { get; set; }
+        IShuffler<string> Shuffler;
 
-        public int MaxWordsCountInOneCard { get; private set; }
+        int MaxWordsCountInOneCard;
 
-        public Cards(int wordsCountInOneCard)
+        public Cards(int wordsCountInOneCard, IShuffler<string> shuffler)
         {
             this.MaxWordsCountInOneCard = wordsCountInOneCard;
 
-            this.Shuffler = new StringShuffler();
+            this.Shuffler = shuffler;
         }
 
         public Card[] GetCards(string[] words)
@@ -38,7 +38,7 @@ namespace SelfHostedRestService.Models
                 .ToArray();
         }
 
-        private string[] GetActiveWords(string[] words)
+        public string[] GetActiveWords(string[] words)
         {
             if (words.Length < MaxWordsCountInOneCard) throw new ArgumentOutOfRangeException("Слов слишком мало даже для одной карточки! Минимум: " + MaxWordsCountInOneCard);
 
