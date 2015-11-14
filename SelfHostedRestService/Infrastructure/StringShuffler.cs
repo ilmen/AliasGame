@@ -9,6 +9,8 @@ namespace SelfHostedRestService.Infrastructure
     {
         public IEnumerable<string> Shuffle(IEnumerable<string> collection)
         {
+            if (collection == null) throw new ArgumentNullException("Ссылка на список слов не передана!");
+
             var seed = GetRandomSeed();
             var rnd = new Random(seed);
             

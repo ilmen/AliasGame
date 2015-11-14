@@ -64,7 +64,9 @@
   <ItemGroup>
     <Compile Include="Controllers\CardsController.cs" />
     <Compile Include="Controllers\WordsController.cs" />
+    <Compile Include="Infrastructure\ICutter.cs" />
     <Compile Include="Infrastructure\IShuffler.cs" />
+    <Compile Include="Infrastructure\StringCutter.cs" />
     <Compile Include="Infrastructure\StringShuffler.cs" />
     <Compile Include="Infrastructure\SystemTime.cs" />
     <Compile Include="Models\Card.cs" />

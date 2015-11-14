@@ -71,7 +71,7 @@ namespace SelfHostedRestService.UnitTests
             var words = GetWordsArray();
             var shlr = new StringShuffler();
             SystemTime.Set(DateTime.MinValue);
-            
+
             var shuffled1 = shlr.Shuffle(words).ToArray();
             var shuffled2 = shlr.Shuffle(words).ToArray();
 
@@ -82,6 +82,17 @@ namespace SelfHostedRestService.UnitTests
             // не только от начального значения Seed, а еще и от окружения и может вернуть 
             // эквивалентные ряды псевдослучайных чисел при различных начальных значениях Seed
             CollectionAssert.AreEquivalent(shuffled1, shuffled2);
+        }
+
+        [Test]
+        public void Shuffle_NullCollection_ThrownArgumentNullException()
+        {
+            var words = GetWordsArray();
+            var shlr = new StringShuffler();
+            SystemTime.Set(DateTime.MinValue);
+
+            var ex = Assert.Catch<ArgumentNullException>(() => shlr.Shuffle(null));
+            StringAssert.Contains("Ссылка", ex.Message);    
         }
 
         [TearDown]

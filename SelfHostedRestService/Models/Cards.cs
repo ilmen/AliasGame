@@ -8,23 +8,29 @@ namespace SelfHostedRestService.Models
 {
     public class Cards
     {
-        IShuffler<string> Shuffler;
-
         int MaxWordsCountInOneCard;
 
-        public Cards(int wordsCountInOneCard, IShuffler<string> shuffler)
+        IShuffler<string> Shuffler;
+
+        ICutter<string> Cutter;
+
+        public Cards(int wordsCountInOneCard, IShuffler<string> shuffler, ICutter<string> cutter)
         {
+            if (wordsCountInOneCard <= 0) throw new ArgumentException("Параметр wordsCountInOneCard должен быть больше нуля!");
+
             this.MaxWordsCountInOneCard = wordsCountInOneCard;
 
             this.Shuffler = shuffler;
+
+            this.Cutter = cutter;
         }
 
         public Card[] GetCards(string[] words)
         {
-            var activeWords = GetActiveWords(words);
-            var randomWords = Shuffler.Shuffle(activeWords);
+            var activeWords = Cutter.CutMultipleOfBasis(words, MaxWordsCountInOneCard);
+            var shuffledWords = Shuffler.Shuffle(activeWords);
             
-            var wordGroups = randomWords
+            var wordGroups = shuffledWords
                 .Select((word, index) => new
                 {
                     Word = word,
@@ -36,15 +42,6 @@ namespace SelfHostedRestService.Models
             return wordGroups
                 .Select(x => new Card(x.Key, x.Select(w => w.Word).ToArray()))
                 .ToArray();
-        }
-
-        public string[] GetActiveWords(string[] words)
-        {
-            if (words.Length < MaxWordsCountInOneCard) throw new ArgumentOutOfRangeException("Слов слишком мало даже для одной карточки! Минимум: " + MaxWordsCountInOneCard);
-
-            // усекаем кол-во слов так, чтобы получилось целое число карточек
-            var cardCount = (int)(words.Length / MaxWordsCountInOneCard);
-            return words.Take(cardCount * MaxWordsCountInOneCard).ToArray();
         }
     }
 }

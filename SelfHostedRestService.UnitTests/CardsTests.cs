@@ -26,56 +26,139 @@ namespace SelfHostedRestService.UnitTests
                 .ToArray();
         }
 
-        private class NoShuffler : IShuffler<string>
+        private class StubShuffler : IShuffler<string>
         {
             public IEnumerable<string> Shuffle(IEnumerable<string> collection)
             {
                 return collection;
             }
         }
+
+        private class StubCutter : ICutter<string>
+        {
+            public string[] CutMultipleOfBasis(string[] entities, int basis)
+            {
+                return entities;
+            }
+        }
         #endregion
 
         [Test]
-        public void GetActiveWords_GivenMultipleWords_ReturnsAllWords()
+        public void Ctor_ZeroWordsCountInOneCard_ThrownsArgumentException()
+        {
+            var shuffler = Substitute.For<IShuffler<string>>();
+            var cutter = Substitute.For<ICutter<string>>();
+
+            var ex = Assert.Catch<ArgumentException>(() => new Cards(0, shuffler, cutter));
+            StringAssert.Contains("wordsCountInOneCard", ex.Message);
+        }
+
+        [Test]
+        public void Ctor_ZeroLessWordsCountInOneCard_ThrownsArgumentException()
+        {
+            var shuffler = Substitute.For<IShuffler<string>>();
+            var cutter = Substitute.For<ICutter<string>>();
+
+            var ex = Assert.Catch<ArgumentException>(() => new Cards(-1, shuffler, cutter));
+            StringAssert.Contains("wordsCountInOneCard", ex.Message);
+        }
+
+        [Test]
+        public void GetCards_Always_UseShuffler()
+        {
+            var shuffler = Substitute.For<IShuffler<string>>();
+            var cutter = Substitute.For<ICutter<string>>();
+            var cards = new Cards(1, shuffler, cutter);
+            var words = GetWordsList();
+
+            cards.GetCards(words);
+
+            shuffler.Received().Shuffle(Arg.Any<string[]>());
+        }
+
+        [Test]
+        public void GetCards_Always_UseCutter()
+        {
+            var shuffler = Substitute.For<IShuffler<string>>();
+            var cutter = Substitute.For<ICutter<string>>();
+            var cards = new Cards(1, shuffler, cutter);
+            var words = GetWordsList();
+
+            cards.GetCards(words);
+
+            cutter.Received().CutMultipleOfBasis(Arg.Any<string[]>(), Arg.Any<int>());
+        }
+
+        [Test]
+        public void GetCards_Always_ReturnsInstanceOfCardClass()
+        {
+            var words = GetWordsList(10);
+            var provider = new Cards(10, new StubShuffler(), new StubCutter());
+
+            var cards = provider.GetCards(words);
+
+            CollectionAssert.AllItemsAreInstancesOfType(cards, typeof(Card));
+        }
+
+        [Test]
+        public void GetCards_Given10WordsWith10Basis_Returns1CardOf10Words()
+        {
+            var words = GetWordsList(10);
+            var provider = new Cards(10, new StubShuffler(), new StubCutter());
+
+            var cards = provider.GetCards(words);
+
+            Assert.AreEqual(1, cards.Length);
+            Assert.AreEqual(10, cards.First().Words.Length);
+            Assert.AreEqual(0, cards.First().Index);
+        }
+
+        [Test]
+        public void GetCards_Given1WordWith10Basis_Returns1CardOf1Word()
+        {
+            var collectionWithOneWOrd = new string[] { "OneWord" };
+            var provider = new Cards(10, new StubShuffler(), new StubCutter());
+
+            var cards = provider.GetCards(collectionWithOneWOrd);
+
+            Assert.AreEqual(1, cards.Length);
+            Assert.AreEqual(1, cards.First().Words.Length);
+            Assert.AreEqual(0, cards.First().Index);
+        }
+
+        [Test]
+        public void GetCards_Given50WordsWith10Basis_Returns5CardOf10Words()
         {
             var words = GetWordsList(50);
-            var provider = new Cards(10, new NoShuffler());
-            
-            var cards = provider.GetActiveWords(words);
+            var provider = new Cards(10, new StubShuffler(), new StubCutter());
 
-            Assert.AreEqual(50, cards.Length);
+            var cards = provider.GetCards(words);
+
+            Assert.AreEqual(5, cards.Length);
+            Assert.IsTrue(cards.All(x => x.Words.Length == 10));
+
+            var cardWithIndex = cards
+                .Select((x, index) => new
+                {
+                    CollIndex = index, 
+                    TestCard = x
+                });
+            Assert.IsTrue(cardWithIndex.All(x => x.CollIndex == x.TestCard.Index));
         }
 
         [Test]
-        public void GetActiveWords_GivenNoMultipleWords_ReturnsOnlyMultipleWords()
+        public void GetCards_Given15WordsWith10Basis_Returns1FullCardAnd1HalfCard()
         {
-            var words = GetWordsList(52);
-            var provider = new Cards(10, new NoShuffler());
+            var words = GetWordsList(15);
+            var provider = new Cards(10, new StubShuffler(), new StubCutter());
 
-            var cards = provider.GetActiveWords(words);
+            var cards = provider.GetCards(words);
 
-            Assert.AreEqual(50, cards.Length);
-        }
-
-        [Test]
-        public void GetActiveWords_OtherMaxCardCount_ReturnsMultipleWords()
-        {
-            var words = GetWordsList(12);
-            var provider = new Cards(3, new NoShuffler());
-
-            var cards = provider.GetActiveWords(words);
-
-            Assert.AreEqual(12, cards.Length);
-        }
-
-        [Test]
-        public void GetActiveWords_EmptyWordList_ThrownArgumentException()
-        {
-            var provider = new Cards(10, new NoShuffler());
-            var shortList = new string[] { "word1", "word2", "word3" };
-
-            var ex = Assert.Catch<ArgumentOutOfRangeException>(() => provider.GetActiveWords(shortList));
-            StringAssert.Contains("Слов слишком мало даже для одной карточки", ex.Message);
+            Assert.AreEqual(2, cards.Length);
+            Assert.AreEqual(0, cards[0].Index);
+            Assert.AreEqual(1, cards[1].Index);
+            Assert.AreEqual(10, cards[0].Words.Length);
+            Assert.AreEqual(5, cards[1].Words.Length);        
         }
     }
 }

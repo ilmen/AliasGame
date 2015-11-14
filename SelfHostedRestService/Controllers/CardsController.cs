@@ -14,7 +14,7 @@ namespace SelfHostedRestService.Controllers
             var wordProvider = new Words();
             var words = wordProvider.GetAllWords();
 
-            var cardProvider = new Cards(10, new StringShuffler());
+            var cardProvider = new Cards(10, new StringShuffler(), new StringCutter());
             cards = cardProvider.GetCards(words);
         }
 

@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="CardsTests.cs" />
     <Compile Include="CardTests.cs" />
+    <Compile Include="StringCutterTests.cs" />
     <Compile Include="StringShufflerTests.cs" />
     <Compile Include="SystemTimeTests.cs" />
     <Compile Include="WordsTests.cs" />
