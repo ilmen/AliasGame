@@ -11,6 +11,6 @@ namespace SelfHostedRestService.UnitTests
     public class WordsTest
     {
         //[Test]
-
+        // Интеграционные тесты с файлами?
     }
 }

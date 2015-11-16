@@ -21,12 +21,18 @@ namespace SelfHostedRestService.Infrastructure
             var jsonFormater = new System.Net.Http.Formatting.JsonMediaTypeFormatter();
             selfHostConfiguraiton.Formatters.Add(jsonFormater);
 
-            // настраиваем роуты
+            // добавляем шаблон Rest-контроллеров
             selfHostConfiguraiton.Routes.MapHttpRoute(
                 name: "DefaultApiRoute",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // добавляем Index страницу
+            selfHostConfiguraiton.Routes.MapHttpRoute(
+                name: "Default",
+                routeTemplate: "{controller}/{action}",
+                defaults: new { controller = "Home", action = "Index" });
 
             return selfHostConfiguraiton;
         }
