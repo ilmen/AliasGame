@@ -1,5 +1,4 @@
-﻿using SelfHostedRestService.Infrastructure;
-using System;
+﻿using System;
 using System.Linq;
 using System.Web.Http.SelfHost;
 

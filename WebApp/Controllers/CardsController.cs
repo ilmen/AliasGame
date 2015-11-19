@@ -3,7 +3,7 @@ using AliasGameBL.Models;
 using System.Collections.Generic;
 using System.Web.Http;
 
-namespace SelfHostedRestService.Controllers
+namespace WebApp.Controllers
 {
     public class CardsController : ApiController
     {
