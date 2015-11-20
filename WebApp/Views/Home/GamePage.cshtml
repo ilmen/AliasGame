@@ -1,0 +1,23 @@
+﻿@model WebApp.Models.UserContext
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GamePageView</title>
+</head>
+<body>
+    <div>
+        @Model.UserUid
+        <br />
+        @Model.CardIndexSequenceStartSeed
+        <br />
+        @Model.CardIndexSequence 
+    </div>
+</body>
+</html>
