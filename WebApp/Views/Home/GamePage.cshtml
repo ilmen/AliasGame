@@ -17,8 +17,12 @@
         <br />
         @Model.Context.CardIndexSequenceStartSeed
         <br />
-        @Model.Context.CardIndexSequence
-        
+        <span>CardId: @Model.CurrentCard.Index</span>
+        <br />
+        @foreach (var item in Model.CurrentCard.Words)
+        {
+            <b>@Html.Label(item)</b><br />
+        }
     </div>
 </body>
 </html>
