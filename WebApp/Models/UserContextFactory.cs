@@ -8,7 +8,7 @@ namespace WebApp.Models
     public class UserContextFactory
     {
         public static int CardCount
-        { get; set; }
+        { get { return 10; } }
         
         static List<UserContext> UserContexts = new List<UserContext>();
 
@@ -46,7 +46,7 @@ namespace WebApp.Models
         {
             var rnd = new Random(userSeed);
             return Enumerable.Range(1, cardCount)
-                .Select(x => rnd.Next(cardCount))
+                .OrderBy(x => rnd.Next(cardCount))
                 .ToList();
         }
 

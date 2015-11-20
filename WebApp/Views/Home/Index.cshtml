@@ -48,11 +48,7 @@
 
     <div class="container body-content">
 
-        <div id="logon">
-            <button onclick="ShowUserSelector()">Выбрать существующие</button>
-            <button onclick="ShowUserCreator()">Перейти к созданию</button>
-        </div>
-        <div id="divSelectName" style="display : none">
+        <div id="divSelectName">
             @Html.DropDownListFor(x => x.StringSelectedUserUid,
                 Model.Users
                 .Select(u => new SelectListItem()
@@ -69,6 +65,11 @@
                 @Html.TextBox("userName")
                 <input type="submit" value="Создать" />
             }
+        </div>
+
+        <div id="logon">
+            <button onclick="ShowUserSelector()">Выбрать существующие</button>
+            <button onclick="ShowUserCreator()">Перейти к созданию</button>
         </div>
         <br />
 

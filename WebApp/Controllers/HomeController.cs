@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AliasGameBL;
+using AliasGameBL.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -23,8 +25,28 @@ namespace WebApp.Controllers
         {
             var factory = new UserContextFactory();
             var context = factory.GetUserContext(userUid);
+            var card = GetCard(context.CardIndexSequence.FirstOrDefault());
+            var session = new GameSession()
+            {
+                Context = context,
+                CurrentCard = card
+            };
 
-            return View(context);
+            return View(session);
+        }
+
+        private Card GetCard(int cardIndex)
+        {
+            var words = GetWords();
+            var provider = new Cards(10, new StringShuffler(), new StringCutter());
+            return provider.GetCards(words)
+                .FirstOrDefault(x => x.Index == cardIndex);
+        }
+
+        private string[] GetWords()
+        {
+            var provider = new Words();
+            return provider.GetAllWords();
         }
 
         public ActionResult CreateUser(string userName)
@@ -37,7 +59,8 @@ namespace WebApp.Controllers
 
             factory.AddUser(userName, guid);
 
-            return RedirectToAction("GamePage", "Home", new { userUid = guid.ToString() });
+            //return RedirectToAction("GamePage", "Home", new { userUid = guid.ToString() });
+            return Redirect("/Home/Index");
         }
 
         private Guid GetGuid(UserContextFactory factory)

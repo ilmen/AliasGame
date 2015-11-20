@@ -1,4 +1,4 @@
-﻿@model WebApp.Models.UserContext
+﻿@model WebApp.Models.GameSession
 
 @{
     Layout = null;
@@ -13,11 +13,12 @@
 </head>
 <body>
     <div>
-        @Model.UserUid
+        @Model.Context.UserUid
         <br />
-        @Model.CardIndexSequenceStartSeed
+        @Model.Context.CardIndexSequenceStartSeed
         <br />
-        @Model.CardIndexSequence 
+        @Model.Context.CardIndexSequence
+        
     </div>
 </body>
 </html>
