@@ -1,5 +1,5 @@
-﻿using AliasGameBL;
-using AliasGameBL.Models;
+﻿using AliasGameBL.Models;
+using AliasGameBL.Utillity;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -14,7 +14,7 @@ namespace SelfHostedRestService.Controllers
             var wordProvider = new Words();
             var words = wordProvider.GetAllWords();
 
-            var cardProvider = new Cards(10, new StringShuffler(), new StringCutter());
+            var cardProvider = new Cards(10, new Shuffler<string>(), new StringCutter());
             cards = cardProvider.GetCards(words);
         }
 

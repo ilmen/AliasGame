@@ -1,9 +1,8 @@
-﻿using NUnit.Framework;
+﻿using AliasGameBL.Utillity;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AliasGameBL.UnitTests
 {
@@ -28,7 +27,7 @@ namespace AliasGameBL.UnitTests
         {
             SystemTime.Set(DateTime.MinValue);
             var words = GetWordsArray();
-            var shlr = new StringShuffler();
+            var shlr = new Shuffler<string>();
 
             var shuffled = shlr.Shuffle(words).ToArray();
 
@@ -45,7 +44,7 @@ namespace AliasGameBL.UnitTests
         public void Shuffle_RunedAtDifferentTime_RetunsOtherShuffle()
         {
             var words = GetWordsArray();
-            var shlr = new StringShuffler();
+            var shlr = new Shuffler<string>();
             var time1 = DateTime.MinValue;
             var time2 = DateTime.MinValue.AddTicks(1);
             
@@ -68,7 +67,7 @@ namespace AliasGameBL.UnitTests
         public void Shuffle_RunedAtTheSameTime_RetunsEqualsShuffle()
         {
             var words = GetWordsArray();
-            var shlr = new StringShuffler();
+            var shlr = new Shuffler<string>();
             SystemTime.Set(DateTime.MinValue);
 
             var shuffled1 = shlr.Shuffle(words).ToArray();
@@ -87,7 +86,7 @@ namespace AliasGameBL.UnitTests
         public void Shuffle_NullCollection_ThrownArgumentNullException()
         {
             var words = GetWordsArray();
-            var shlr = new StringShuffler();
+            var shlr = new Shuffler<string>();
             SystemTime.Set(DateTime.MinValue);
 
             var ex = Assert.Catch<ArgumentNullException>(() => shlr.Shuffle(null));

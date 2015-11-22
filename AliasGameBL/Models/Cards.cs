@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AliasGameBL.Utillity;
+using System;
 using System.Linq;
-using System.Text;
 
 namespace AliasGameBL.Models
 {

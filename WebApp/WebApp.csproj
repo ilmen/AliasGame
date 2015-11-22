@@ -99,22 +99,26 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Styles\style.css" />
     <Content Include="Web.config" />
-    <Content Include="Views\Home\GamePage.cshtml" />
+    <Content Include="Views\Home\Game.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CardsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Models\IModelWithValidCheck.cs" />
+    <Compile Include="Models\IndexPageVM.cs" />
+    <Compile Include="Models\ValidResult.cs" />
     <Compile Include="Models\GameSession.cs" />
-    <Compile Include="Models\UserContextFactory.cs" />
+    <Compile Include="Models\UserContextRepository.cs" />
     <Compile Include="Controllers\WordsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\UserContext.cs" />
-    <Compile Include="Models\UserListVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -129,12 +133,14 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\AliasGameBL\AliasGameBL.csproj">
       <Project>{e99745cd-95ff-4aee-99d3-b4dec00787c6}</Project>
       <Name>AliasGameBL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Users\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

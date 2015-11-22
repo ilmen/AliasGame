@@ -1,4 +1,4 @@
-﻿@model WebApp.Models.UserListVM
+﻿@model WebApp.Models.IndexPageVM
 
 @{
     Layout = null;
@@ -11,74 +11,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alias Game</title>
     <script src="~/Scripts/jquery-1.10.2.js"></script>
-    <script language="javascript">
-        //function SendAjaxPostRequest() {
-        //    $.getJSON("/api/cards/4", DataParse);
-        //}
-
-        //function DataParse(data) {
-        //    //alert("Прибыли данные: " + data.Index);
-        //    document.getElementById('card').innerHTML = 'Fred Flinstone';
-        //}
-
-        function ShowUserSelector () {
-            $('#divSelectName').css('display', 'block');
-            $('#divCreateNewName').css('display', 'none');
-        }
-
-        function ShowUserCreator() {
-            $("#divSelectName").css("display", "none");
-            $("#divCreateNewName").css("display", "block");
+    <link rel="stylesheet" type="text/css" href="~/Styles/style.css" />
+    <script type="text/javascript">
+        function ChangeUserNameSelection(sel) {
+            if (sel.value == "@Guid.Empty.ToString()") {
+                $('#newusername').css("display", "block");
+            }
+            else {
+                $('#newusername').css("display", "none");
+            };
         }
     </script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                </button>
-                </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav"></ul>
-            </div>
-        </div>
-    </div>
+    <!-- http://habrahabr.ru/post/238449/ -->
 
-    <div class="container body-content">
+    <!-- http://vladmaxi.net/web-developer/css/22-luchshix-formy-vxoda-i-registracii-na-sajte-v-html-css.html -->
 
-        <div id="divSelectName">
-            @Html.DropDownListFor(x => x.StringSelectedUserUid,
-                Model.Users
-                .Select(u => new SelectListItem()
-                {
-                    Text = u.UserName,
-                    Value = u.UserUid.ToString()
-                }))
-            @Html.ActionLink("Выбрать", "GamePage", "Home", new { userUid = Model.StringSelectedUserUid }, null)
-        </div>
-
-        <div id="divCreateNewName" style="display : none">
-            @using (Html.BeginForm("CreateUser", "Home"))
+    @using (Html.BeginForm("Create", "Users", FormMethod.Get, new { id = "slick-login" }))
+    {
+        @Html.DropDownList("selectedUserName",
+            @Model.UCList.Select(x => new SelectListItem()
             {
-                @Html.TextBox("userName")
-                <input type="submit" value="Создать" />
-            }
-        </div>
-
-        <div id="logon">
-            <button onclick="ShowUserSelector()">Выбрать существующие</button>
-            <button onclick="ShowUserCreator()">Перейти к созданию</button>
-        </div>
-        <br />
-
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+                Text = x.UserName,
+                Selected = x.UserUid == Guid.Empty,
+                Value = x.UserUid.ToString()
+            }),
+            new { @class = "placeholder", id = "selectUserName", onchange = "ChangeUserNameSelection(this);" })
+        <label for="username">Логин:</label>
+        <input type="text" name="username" class="placeholder" id="newusername" placeholder="Новый игрок..." />
+        <input type="submit" id="SubmitButton" value="ИГРАТЬ" />
+    }
 </body>
 </html>

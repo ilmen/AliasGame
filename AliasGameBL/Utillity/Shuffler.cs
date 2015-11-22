@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AliasGameBL
+namespace AliasGameBL.Utillity
 {
-    public class StringShuffler : IShuffler<string>
+    public class Shuffler<T> : IShuffler<T>
     {
-        public IEnumerable<string> Shuffle(IEnumerable<string> collection)
+        public IEnumerable<T> Shuffle(IEnumerable<T> collection)
         {
-            if (collection == null) throw new ArgumentNullException("Ссылка на список слов не передана!");
+            if (collection == null) throw new ArgumentNullException("Ссылка на список для сортировки не передана!");
 
             var seed = GetRandomSeed();
             var rnd = new Random(seed);

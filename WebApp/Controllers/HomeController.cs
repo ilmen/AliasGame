@@ -1,5 +1,6 @@
 ﻿using AliasGameBL;
 using AliasGameBL.Models;
+using AliasGameBL.Utillity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,17 @@ namespace WebApp.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var factory = new UserContextFactory();
-            var vm = new UserListVM(factory);
+            var repos = new UserContextRepository();
+            var ucList = repos.GetAll();
+            var vm = new IndexPageVM(ucList);
 
             return View(vm);
         }
 
-        public ActionResult GamePage(Guid userUid)
+        public ActionResult Game(Guid userUid)
         {
-            var factory = new UserContextFactory();
-            var context = factory.GetUserContext(userUid);
+            var repos = new UserContextRepository();
+            var context = repos.Get(userUid);
             var card = GetCard(context.CardIndexSequence.FirstOrDefault());
             var session = new GameSession()
             {
@@ -38,7 +40,7 @@ namespace WebApp.Controllers
         private Card GetCard(int cardIndex)
         {
             var words = GetWords();
-            var provider = new Cards(10, new StringShuffler(), new StringCutter());
+            var provider = new Cards(10, new Shuffler<string>(), new StringCutter());
             return provider.GetCards(words)
                 .FirstOrDefault(x => x.Index == cardIndex);
         }
@@ -51,23 +53,17 @@ namespace WebApp.Controllers
 
         public ActionResult CreateUser(string userName)
         {
-            var factory = new UserContextFactory();
+            var repos = new UserContextRepository();
 
-            var guid = GetGuid(factory);
-            if (factory.GetAllUserContext().Any(x => x.UserName == userName))
+            var guid = Guid.NewGuid();
+            if (repos.GetAll().Any(x => x.UserName == userName))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            factory.AddUser(userName, guid);
+            var user = repos.Create(guid, userName, 10);
+            repos.Add(user);
 
-            //return RedirectToAction("GamePage", "Home", new { userUid = guid.ToString() });
+            //return RedirectToAction("Game", "Home", new { userUid = guid.ToString() });
             return Redirect("/Home/Index");
-        }
-
-        private Guid GetGuid(UserContextFactory factory)
-        {
-            var guid = Guid.NewGuid();
-            if (factory.GetAllUserContext().Any(x => x.UserUid == guid)) return GetGuid(factory);
-            return guid;
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AliasGameBL
+namespace AliasGameBL.Utillity
 {
     public interface ICutter<T>
     {
