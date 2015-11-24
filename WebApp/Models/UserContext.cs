@@ -7,7 +7,7 @@ using System.Web;
 namespace WebApp.Models
 {
     [Serializable]
-    public class UserContext : IModelWithValidCheck
+    public class UserContext : IValidatedModel
     {
         public Guid UserUid
         { get; set; }

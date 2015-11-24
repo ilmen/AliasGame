@@ -1,7 +1,7 @@
 ﻿using System;
 namespace WebApp.Models
 {
-    public interface IModelWithValidCheck
+    public interface IValidatedModel
     {
         ValidResult IsValid();
     }

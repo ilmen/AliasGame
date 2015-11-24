@@ -28,9 +28,9 @@
 
     <!-- http://vladmaxi.net/web-developer/css/22-luchshix-formy-vxoda-i-registracii-na-sajte-v-html-css.html -->
 
-    @using (Html.BeginForm("Create", "Users", FormMethod.Get, new { id = "slick-login" }))
+    @using (Html.BeginForm("Logon", "Users", FormMethod.Get, new { id = "slick-login" }))
     {
-        @Html.DropDownList("selectedUserName",
+        @Html.DropDownList("selectedUserUid",
             @Model.UCList.Select(x => new SelectListItem()
             {
                 Text = x.UserName,
@@ -39,7 +39,7 @@
             }),
             new { @class = "placeholder", id = "selectUserName", onchange = "ChangeUserNameSelection(this);" })
         <label for="username">Логин:</label>
-        <input type="text" name="username" class="placeholder" id="newusername" placeholder="Новый игрок..." />
+    <input type="text" name="newusername" class="placeholder" id="newusername" placeholder="Новый игрок..." />
         <input type="submit" id="SubmitButton" value="ИГРАТЬ" />
     }
 </body>

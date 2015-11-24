@@ -40,7 +40,8 @@ namespace WebApp.Controllers
         private Card GetCard(int cardIndex)
         {
             var words = GetWords();
-            var provider = new Cards(10, new Shuffler<string>(), new StringCutter());
+            var cardSizeProvider = new CardSizeProvider();
+            var provider = new Cards(cardSizeProvider.GetCardSize(), new Shuffler<string>(), new StringCutter());
             return provider.GetCards(words)
                 .FirstOrDefault(x => x.Index == cardIndex);
         }
@@ -58,8 +59,9 @@ namespace WebApp.Controllers
             var guid = Guid.NewGuid();
             if (repos.GetAll().Any(x => x.UserName == userName))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var cardSizeProvider = new CardSizeProvider();
 
-            var user = repos.Create(guid, userName, 10);
+            var user = repos.Create(guid, userName, cardSizeProvider.GetCardSize());
             repos.Add(user);
 
             //return RedirectToAction("Game", "Home", new { userUid = guid.ToString() });

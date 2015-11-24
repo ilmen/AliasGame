@@ -109,7 +109,9 @@
     <Compile Include="Controllers\CardsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Models\IModelWithValidCheck.cs" />
+    <Compile Include="Models\CardSizeProvider.cs" />
+    <Compile Include="Models\ICardSizeProvider.cs" />
+    <Compile Include="Models\IValidatedModel.cs" />
     <Compile Include="Models\IndexPageVM.cs" />
     <Compile Include="Models\ValidResult.cs" />
     <Compile Include="Models\GameSession.cs" />

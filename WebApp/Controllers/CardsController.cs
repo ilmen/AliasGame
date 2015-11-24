@@ -2,6 +2,7 @@
 using AliasGameBL.Utillity;
 using System.Collections.Generic;
 using System.Web.Http;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
@@ -13,8 +14,9 @@ namespace WebApp.Controllers
         {
             var wordProvider = new Words();
             var words = wordProvider.GetAllWords();
+            var sizeProvider = new CardSizeProvider();
 
-            var cardProvider = new Cards(10, new Shuffler<string>(), new StringCutter());
+            var cardProvider = new Cards(sizeProvider.GetCardSize(), new Shuffler<string>(), new StringCutter());
             cards = cardProvider.GetCards(words);
         }
 
