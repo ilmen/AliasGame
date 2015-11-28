@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WebApp.Models
 {
-    public class GameSession
+    public class GameVM
     {
         public UserContext Context
         { get; set; }

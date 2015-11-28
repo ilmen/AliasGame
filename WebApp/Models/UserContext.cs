@@ -45,8 +45,8 @@ namespace WebApp.Models
                 return ValidResult.GetInvalidResult("Поле CardIndexSequence должно содержать только уникальные значения!");
             }
 
-            var maxIndex = CardIndexSequence.Count();
-            if (Enumerable.Range(0, maxIndex).Except(CardIndexSequence).Count() == 0)
+            var maxIndex = CardIndexSequence.Max();
+            if (Enumerable.Range(0, maxIndex).Except(CardIndexSequence).Count() != 0)
             {
                 return ValidResult.GetInvalidResult("Поле CardIndexSequence должно содержать все числа от 0 до " + maxIndex + "!");
             }

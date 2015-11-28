@@ -1,6 +1,9 @@
-﻿using System;
+﻿using AliasGameBL.Models;
+using AliasGameBL.Utillity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebApp.Models;
@@ -41,6 +44,8 @@ namespace WebApp.Controllers
 
             var provider = new UserContextRepository();
             var uc = provider.Get(data.UserUid);
+            if (uc == null) return new HttpStatusCodeResult(HttpStatusCode.Unauthorized, "Неверные параметры входа! Пользователь не найден!");
+
             AddToSession(uc);
 
             return RedirectToGamePage();
@@ -48,22 +53,35 @@ namespace WebApp.Controllers
 
         public ActionResult Create()
         {
-            var data = GetUserData();
+            var data = GetUserData();   // TODO: переход по ссылке [localhost] + "чтото" в умной строке адреса у яндекс браузера создает нового пользователя "чтото"
 
             if (!data.IsNewUser())
             {
                 return Logon();    // TODO: передавать контекст-объект
             }
 
-            data.IsValid().ThrowArgExceptionIfNotValid();
- 
-            var provider = new UserContextRepository();
-            var cardSizeProvider = new CardSizeProvider();
-            var newUC = provider.Create(Guid.NewGuid(), data.UserName, cardSizeProvider.GetCardSize());
-            provider.Add(newUC);
-            AddToSession(newUC);
+            try
+            {
+                data.IsValid().ThrowArgExceptionIfNotValid();
+                
+                var provider = new UserContextRepository();
+                var wordProvider = new Words();
+                var cardSizeProvider = new CardSizeProvider();
+                var cardProvider = new Cards(cardSizeProvider.GetCardSize(), new Shuffler<string>(), new Cutter<string>());
+                var cardCount = cardProvider.GetCards(wordProvider.GetAllWords()).Length;
 
-            return RedirectToGamePage();
+                // TODO: уйти от запросов постоянных, просто кешировать слова, выделить слова и карточки все в один класс, в синглтон
+
+                var newUC = provider.Create(Guid.NewGuid(), data.UserName, cardCount);
+                provider.Add(newUC);
+                AddToSession(newUC);
+
+                return RedirectToGamePage();
+            }
+            catch (ArgumentException aex)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, aex.Message);
+            }
         }
 
         protected virtual ActionResult RedirectToLoginPage()
@@ -73,7 +91,7 @@ namespace WebApp.Controllers
 
         protected virtual ActionResult RedirectToGamePage()
         {
-            return RedirectToAction("Game", "Home");
+            return RedirectToAction("Index", "Game");
         }
 
         protected virtual UserData GetUserData()
@@ -94,6 +112,5 @@ namespace WebApp.Controllers
 
             Session.Add("usercontext", uc);
         }
-
     }
 }

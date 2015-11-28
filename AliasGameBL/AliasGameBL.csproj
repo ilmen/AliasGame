@@ -44,7 +44,7 @@
     <Compile Include="Utillity\ICutter.cs" />
     <Compile Include="Utillity\IShuffler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utillity\StringCutter.cs" />
+    <Compile Include="Utillity\Cutter.cs" />
     <Compile Include="Utillity\Shuffler.cs" />
     <Compile Include="SystemTime.cs" />
     <Compile Include="Models\Words.cs" />

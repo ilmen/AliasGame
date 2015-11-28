@@ -101,12 +101,13 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Styles\style.css" />
     <Content Include="Web.config" />
-    <Content Include="Views\Home\Game.cshtml" />
+    <Content Include="Views\Game\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\CardsController.cs" />
+    <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Models\CardSizeProvider.cs" />
@@ -114,7 +115,7 @@
     <Compile Include="Models\IValidatedModel.cs" />
     <Compile Include="Models\IndexPageVM.cs" />
     <Compile Include="Models\ValidResult.cs" />
-    <Compile Include="Models\GameSession.cs" />
+    <Compile Include="Models\GameVM.cs" />
     <Compile Include="Models\UserContextRepository.cs" />
     <Compile Include="Controllers\WordsController.cs" />
     <Compile Include="Global.asax.cs">

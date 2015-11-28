@@ -1,4 +1,4 @@
-﻿@model WebApp.Models.GameSession
+﻿@model WebApp.Models.GameVM
 
 @{
     Layout = null;
@@ -15,7 +15,7 @@
     <div>
         @Model.Context.UserUid
         <br />
-        @Model.Context.CardIndexSequenceStartSeed
+        @Model.Context.CardIndexSequence.Select(x => x.ToString()).Aggregate((x, y) => x + ", " + y)
         <br />
         <span>CardId: @Model.CurrentCard.Index</span>
         <br />
