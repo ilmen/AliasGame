@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace AliasGameBL.Models
 {
     public class WordFactory
     {
-        public string[] GetAllWords()
+        public IEnumerable<string> GetAllWords()
         {
             var path = GetPath();
             CreateIfNotExists(path);

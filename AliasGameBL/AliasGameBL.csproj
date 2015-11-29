@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="Models\Card.cs" />
     <Compile Include="Models\CardFactory.cs" />
+    <Compile Include="Models\CardStorage.cs" />
+    <Compile Include="Models\CardStorageFactory.cs" />
     <Compile Include="Utillity\ICutter.cs" />
     <Compile Include="Utillity\IShuffler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

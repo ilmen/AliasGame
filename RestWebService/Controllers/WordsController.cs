@@ -1,31 +1,31 @@
 ﻿using AliasGameBL.Models;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Linq;
 
-namespace SelfHostedRestService.Controllers
+namespace RestWebService.Controllers
 {
     public class WordsController : ApiController
     {
-        static string[] words;
+        static CardStorage cardStorage;
 
-        static WordsController()
+        public static void SetCardStorage(CardStorage cs)
         {
-            var wordsProvider = new WordFactory();
-            words = wordsProvider.GetAllWords();
+            cardStorage = cs;
         }
 
         // GET api/values
         public IEnumerable<string> Get()
         {
-            return words;
+            return cardStorage.Words;
         }
 
         // GET api/values/5
         public string Get(int id)
         {
-            if (id < 0 || id > (words.Length - 1)) return null;
+            if (id < 0 || id > (cardStorage.Words.Count() - 1)) return null;
 
-            return words[id];
+            return cardStorage.Words.Skip(id).FirstOrDefault();
         }
 
         // POST api/values

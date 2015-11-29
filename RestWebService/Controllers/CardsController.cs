@@ -2,34 +2,31 @@
 using AliasGameBL.Utillity;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Linq;
 
-namespace SelfHostedRestService.Controllers
+namespace RestWebService.Controllers
 {
     public class CardsController : ApiController
     {
-        static Card[] cards;
+        static CardStorage cardStorage;
 
-        static CardsController()
+        public static void SetCardStorage(CardStorage cs)
         {
-            var wordProvider = new WordFactory();
-            var words = wordProvider.GetAllWords();
-
-            var cardProvider = new CardFactory(10, new Shuffler<string>(), new Cutter<string>());
-            cards = cardProvider.GetCards(words);
+            cardStorage = cs;
         }
 
         // GET api/values
         public IEnumerable<Card> Get()
         {
-            return cards;
+            return cardStorage.Cards;
         }
 
         // GET api/values/5
         public Card Get(int id)
         {
-            if (id < 0 || id > (cards.Length - 1)) return null;
+            if (id < 0 || id > (cardStorage.Cards.Count() - 1)) return null;
 
-            return cards[id];
+            return cardStorage.Cards.Skip(id).FirstOrDefault();
         }
 
         // POST api/values

@@ -1,5 +1,6 @@
 ﻿using AliasGameBL.Utillity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AliasGameBL.Models
@@ -23,7 +24,7 @@ namespace AliasGameBL.Models
             this.Cutter = cutter;
         }
 
-        public Card[] GetCards(string[] words)
+        public IEnumerable<Card> GetCards(IEnumerable<string> words)
         {
             var activeWords = Cutter.CutMultipleOfBasis(words, MaxWordsCountInOneCard);
             var shuffledWords = Shuffler.Shuffle(activeWords);
