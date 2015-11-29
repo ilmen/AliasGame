@@ -10,7 +10,7 @@ namespace AliasGameBL.Utillity
         public IEnumerable<T> CutMultipleOfBasis(IEnumerable<T> entities, int basis)
         {
             if (entities == null) throw new ArgumentNullException("Ссылка на список слов не передана!");
-            if (entities.Count() < basis) throw new ArgumentOutOfRangeException("Слов слишком мало даже для одной группы! Минимум: " + basis);
+            if (entities.Count() < basis) throw new ArgumentException("Слов слишком мало даже для одной группы! Минимум: " + basis);
             if (basis < 1) throw new ArgumentException("Базис должен быть натуральным числом!");
 
             // усекаем кол-во слов так, чтобы получилось целое число карточек

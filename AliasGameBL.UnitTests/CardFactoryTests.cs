@@ -9,7 +9,7 @@ using System.Linq;
 namespace AliasGameBL.UnitTests
 {
     [TestFixture]
-    public class CardsTests
+    public class CardFactoryTests
     {
         #region Helpers
         private string[] GetWordsList()
@@ -34,7 +34,7 @@ namespace AliasGameBL.UnitTests
 
         private class StubCutter : ICutter<string>
         {
-            public string[] CutMultipleOfBasis(string[] entities, int basis)
+            public IEnumerable<string> CutMultipleOfBasis(IEnumerable<string> entities, int basis)
             {
                 return entities;
             }
@@ -44,54 +44,46 @@ namespace AliasGameBL.UnitTests
         [Test]
         public void Ctor_ZeroWordsCountInOneCard_ThrownsArgumentException()
         {
-            var shuffler = Substitute.For<IShuffler<string>>();
-            var cutter = Substitute.For<ICutter<string>>();
-
-            var ex = Assert.Catch<ArgumentException>(() => new Cards(0, shuffler, cutter));
+            var ex = Assert.Catch<ArgumentException>(() => new CardFactory(0, new StubShuffler(), new StubCutter()));
             StringAssert.Contains("wordsCountInOneCard", ex.Message);
         }
 
         [Test]
         public void Ctor_ZeroLessWordsCountInOneCard_ThrownsArgumentException()
         {
-            var shuffler = Substitute.For<IShuffler<string>>();
-            var cutter = Substitute.For<ICutter<string>>();
-
-            var ex = Assert.Catch<ArgumentException>(() => new Cards(-1, shuffler, cutter));
+            var ex = Assert.Catch<ArgumentException>(() => new CardFactory(-1, new StubShuffler(), new StubCutter()));
             StringAssert.Contains("wordsCountInOneCard", ex.Message);
         }
 
         [Test]
         public void GetCards_Always_UseShuffler()
         {
-            var shuffler = Substitute.For<IShuffler<string>>();
-            var cutter = Substitute.For<ICutter<string>>();
-            var cards = new Cards(1, shuffler, cutter);
+            var mock = Substitute.For<IShuffler<string>>();
+            var cards = new CardFactory(1, mock, new StubCutter());
             var words = GetWordsList();
 
             cards.GetCards(words);
 
-            shuffler.Received().Shuffle(Arg.Any<string[]>());
+            mock.Received().Shuffle(Arg.Any<IEnumerable<string>>());
         }
 
         [Test]
         public void GetCards_Always_UseCutter()
         {
-            var shuffler = Substitute.For<IShuffler<string>>();
-            var cutter = Substitute.For<ICutter<string>>();
-            var cards = new Cards(1, shuffler, cutter);
+            var mock = Substitute.For<ICutter<string>>();
+            var cards = new CardFactory(1, new StubShuffler(), mock);
             var words = GetWordsList();
 
             cards.GetCards(words);
 
-            cutter.Received().CutMultipleOfBasis(Arg.Any<string[]>(), Arg.Any<int>());
+            mock.Received().CutMultipleOfBasis(Arg.Any<string[]>(), Arg.Any<int>());
         }
 
         [Test]
         public void GetCards_Always_ReturnsInstanceOfCardClass()
         {
             var words = GetWordsList(10);
-            var provider = new Cards(10, new StubShuffler(), new StubCutter());
+            var provider = new CardFactory(10, new StubShuffler(), new StubCutter());
 
             var cards = provider.GetCards(words);
 
@@ -102,7 +94,7 @@ namespace AliasGameBL.UnitTests
         public void GetCards_Given10WordsWith10Basis_Returns1CardOf10Words()
         {
             var words = GetWordsList(10);
-            var provider = new Cards(10, new StubShuffler(), new StubCutter());
+            var provider = new CardFactory(10, new StubShuffler(), new StubCutter());
 
             var cards = provider.GetCards(words);
 
@@ -115,7 +107,7 @@ namespace AliasGameBL.UnitTests
         public void GetCards_Given1WordWith10Basis_Returns1CardOf1Word()
         {
             var collectionWithOneWOrd = new string[] { "OneWord" };
-            var provider = new Cards(10, new StubShuffler(), new StubCutter());
+            var provider = new CardFactory(10, new StubShuffler(), new StubCutter());
 
             var cards = provider.GetCards(collectionWithOneWOrd);
 
@@ -128,7 +120,7 @@ namespace AliasGameBL.UnitTests
         public void GetCards_Given50WordsWith10Basis_Returns5CardOf10Words()
         {
             var words = GetWordsList(50);
-            var provider = new Cards(10, new StubShuffler(), new StubCutter());
+            var provider = new CardFactory(10, new StubShuffler(), new StubCutter());
 
             var cards = provider.GetCards(words);
 
@@ -148,7 +140,7 @@ namespace AliasGameBL.UnitTests
         public void GetCards_Given15WordsWith10Basis_Returns1FullCardAnd1HalfCard()
         {
             var words = GetWordsList(15);
-            var provider = new Cards(10, new StubShuffler(), new StubCutter());
+            var provider = new CardFactory(10, new StubShuffler(), new StubCutter());
 
             var cards = provider.GetCards(words);
 

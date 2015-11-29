@@ -7,7 +7,7 @@ using System.Linq;
 namespace AliasGameBL.UnitTests
 {
     [TestFixture]
-    public class StringShufflerTests
+    public class ShufflerTests
     {
         private string[] GetWordsArray()
         {

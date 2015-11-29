@@ -7,6 +7,6 @@ namespace AliasGameBL.Utillity
 {
     public interface ICutter<T>
     {
-        T[] CutMultipleOfBasis(T[] entities, int basis);
+        IEnumerable<T> CutMultipleOfBasis(IEnumerable<T> entities, int basis);
     }
 }

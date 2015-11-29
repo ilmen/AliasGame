@@ -65,9 +65,9 @@ namespace WebApp.Controllers
                 data.IsValid().ThrowArgExceptionIfNotValid();
                 
                 var provider = new UserContextRepository();
-                var wordProvider = new Words();
+                var wordProvider = new WordFactory();
                 var cardSizeProvider = new CardSizeProvider();
-                var cardProvider = new Cards(cardSizeProvider.GetCardSize(), new Shuffler<string>(), new Cutter<string>());
+                var cardProvider = new CardFactory(cardSizeProvider.GetCardSize(), new Shuffler<string>(), new Cutter<string>());
                 var cardCount = cardProvider.GetCards(wordProvider.GetAllWords()).Length;
 
                 // TODO: уйти от запросов постоянных, просто кешировать слова, выделить слова и карточки все в один класс, в синглтон

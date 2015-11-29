@@ -10,7 +10,7 @@ namespace WebApp.Controllers
 
         static WordsController()
         {
-            var wordsProvider = new Words();
+            var wordsProvider = new WordFactory();
             words = wordsProvider.GetAllWords();
         }
 

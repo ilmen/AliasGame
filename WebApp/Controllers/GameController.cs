@@ -38,14 +38,14 @@ namespace WebApp.Controllers
         {
             var words = GetWords();
             var cardSizeProvider = new CardSizeProvider();
-            var provider = new Cards(cardSizeProvider.GetCardSize(), new Shuffler<string>(), new StringCutter());
+            var provider = new CardFactory(cardSizeProvider.GetCardSize(), new Shuffler<string>(), new Cutter<string>());
             return provider.GetCards(words)
                 .FirstOrDefault(x => x.Index == cardIndex);
         }
 
         private string[] GetWords()
         {
-            var provider = new Words();
+            var provider = new WordFactory();
             return provider.GetAllWords();
         }
 

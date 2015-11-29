@@ -17,11 +17,19 @@ namespace AliasGameBL.UnitTests
         }
 
         [Test]
+        public void Ctor_NullWordList_ThrowException()
+        {
+            var ex = Assert.Catch < ArgumentNullException > (() => new Card(0, null));
+
+            StringAssert.Contains("Пустая коллекция слов", ex.Message);
+        }
+
+        [Test]
         public void Ctor_EmptyWordList_ThrownException()
         {
             var emptyWordArray = new string[] {};
 
-            var ex = Assert.Catch<ArgumentOutOfRangeException>(() => new Card(0, emptyWordArray));
+            var ex = Assert.Catch<ArgumentException>(() => new Card(0, emptyWordArray));
 
             StringAssert.Contains("Коллекция слов для карточки не может быть пустой", ex.Message);
         }

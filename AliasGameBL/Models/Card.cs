@@ -7,24 +7,22 @@ namespace AliasGameBL.Models
 {
     public class Card
     {
-        #region Words readonly property
         private readonly string[] words;
-
-        public string[] Words { get { return words; } }
-        #endregion
-
-        #region Index readonly property
         private readonly int index;
 
-        public int Index { get { return index; } } 
-        #endregion
+        public string[] Words
+        { get { return words; } }
+
+        public int Index
+        { get { return index; } } 
         
-        public Card(int index, string[] wordsArray)
+        public Card(int index, string[] cardWords)
         {
-            if (wordsArray.Length == 0) throw new ArgumentOutOfRangeException("Коллекция слов для карточки не может быть пустой!");
+            if (cardWords == null) throw new ArgumentNullException("Пустая коллекция слов недопустима!");
+            if (cardWords.Length == 0) throw new ArgumentException("Коллекция слов для карточки не может быть пустой!");
 
             this.index = index;
-            this.words = wordsArray;
+            this.words = cardWords;
         }
     }
 }

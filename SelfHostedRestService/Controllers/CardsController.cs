@@ -11,10 +11,10 @@ namespace SelfHostedRestService.Controllers
 
         static CardsController()
         {
-            var wordProvider = new Words();
+            var wordProvider = new WordFactory();
             var words = wordProvider.GetAllWords();
 
-            var cardProvider = new Cards(10, new Shuffler<string>(), new StringCutter());
+            var cardProvider = new CardFactory(10, new Shuffler<string>(), new Cutter<string>());
             cards = cardProvider.GetCards(words);
         }
 

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AliasGameBL.Models
 {
-    public class Cards
+    public class CardFactory
     {
         int MaxWordsCountInOneCard;
 
@@ -12,8 +12,7 @@ namespace AliasGameBL.Models
 
         ICutter<string> Cutter;
 
-        // TODO: переделать конструктор - чтобы не показывать shuffler, cutter
-        public Cards(int wordsCountInOneCard, IShuffler<string> shuffler, ICutter<string> cutter)
+        public CardFactory(int wordsCountInOneCard, IShuffler<string> shuffler, ICutter<string> cutter)
         {
             if (wordsCountInOneCard <= 0) throw new ArgumentException("Параметр wordsCountInOneCard должен быть больше нуля!");
 

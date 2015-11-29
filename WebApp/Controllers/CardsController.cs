@@ -12,11 +12,11 @@ namespace WebApp.Controllers
 
         static CardsController()
         {
-            var wordProvider = new Words();
+            var wordProvider = new WordFactory();
             var words = wordProvider.GetAllWords();
             var sizeProvider = new CardSizeProvider();
 
-            var cardProvider = new Cards(sizeProvider.GetCardSize(), new Shuffler<string>(), new StringCutter());
+            var cardProvider = new CardFactory(sizeProvider.GetCardSize(), new Shuffler<string>(), new Cutter<string>());
             cards = cardProvider.GetCards(words);
         }
 
